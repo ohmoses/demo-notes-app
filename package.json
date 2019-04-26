@@ -1,0 +1,8 @@
+{
+  "name": "2019-demo-notes-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Moses <moses.skoda@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
