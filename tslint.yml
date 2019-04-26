@@ -1,0 +1,9 @@
+extends:
+  - "tslint:latest"
+  - "tslint-react"
+  - "tslint-config-prettier"
+rules:
+  no-submodule-imports: false
+linterOptions:
+  exclude:
+    - "node_modules/**/*"
