@@ -5,13 +5,41 @@
   "author": "Moses <moses.skoda@gmail.com>",
   "license": "MIT",
   "private": true,
+  "dependencies": {
+    "@okgrow/graphql-scalars": "^0.4.5",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link-schema": "^1.2.2",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
+    "graphql-tools": "^4.0.4",
+    "merge-graphql-schemas": "^1.5.8",
+    "react": "^16.8.6",
+    "react-apollo-hooks": "^0.4.5",
+    "react-dom": "^16.8.6",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-react-hook": "^3.3.1",
+    "uuid": "^3.3.2"
+  },
   "devDependencies": {
+    "@graphql-codegen/add": "^1.1.1",
+    "@graphql-codegen/cli": "^1.1.1",
+    "@graphql-codegen/typescript": "^1.1.1",
+    "@graphql-codegen/typescript-operations": "^1.1.1",
+    "@graphql-codegen/typescript-resolvers": "^1.1.1",
+    "@types/graphql": "^14.2.0",
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
+    "@types/uuid": "^3.4.4",
     "clean-webpack-plugin": "^2.0.1",
     "fork-ts-checker-webpack-plugin": "^1.2.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^2.1.0",
     "lint-staged": "^8.1.5",
     "prettier": "^1.17.0",
+    "ts-essentials": "^2.0.6",
     "ts-loader": "^5.4.3",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
@@ -24,7 +52,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "gen": "graphql-codegen"
   },
   "husky": {
     "hooks": {

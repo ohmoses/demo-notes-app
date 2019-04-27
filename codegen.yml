@@ -1,0 +1,19 @@
+schema: ./src/server-mock/gql/*
+config:
+  scalars:
+    DateTime: Date
+    NonNegativeInt: number
+    TagName: string
+  defaultMapper: ts-essentials#DeepPartial<{T}>
+  mappers:
+    Note: ../server-mock/db#NoteObject
+    Tag: ../server-mock/db#TagObject
+  contextType: ../server-mock#Context
+generates:
+  ./src/gen/types.ts:
+    documents: ./src/view/**/*
+    plugins:
+      - add: /* tslint:disable */
+      - typescript
+      - typescript-operations
+      - typescript-resolvers

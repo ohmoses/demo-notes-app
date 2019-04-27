@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react",
+    "jsxFactory": "createElement",
     "lib": ["dom", "esnext"],
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "removeComments": true,
     "sourceMap": true,
