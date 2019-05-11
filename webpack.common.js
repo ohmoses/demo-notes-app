@@ -56,6 +56,7 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "src/index.html",
+      filename: "../index.html",
     }),
   ],
   resolve: {
