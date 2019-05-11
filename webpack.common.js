@@ -58,6 +58,10 @@ module.exports = {
       template: "src/index.html",
       filename: "../index.html",
     }),
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+      filename: "index.html",
+    }),
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".wasm", ".mjs", ".js", ".json"],

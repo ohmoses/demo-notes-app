@@ -1,2 +1,3 @@
 node_modules
 notes
+src/view/**/*.scss.d.ts

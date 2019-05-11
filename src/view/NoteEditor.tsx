@@ -165,7 +165,7 @@ export function NoteEditor({ noteCount, currentNote }: Props) {
   const isNoteExpanded = getFromStore("isNoteExpanded")
   const isMutating = getFromStore("isMutating")
   const windowSize = getFromStore("windowSize")
-  const showArrowBack = windowSize === WindowSize.Small
+  const showArrowBack = windowSize <= WindowSize.Small
 
   // Focus management
   const titleRef = useRef(null)
