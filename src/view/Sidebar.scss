@@ -1,0 +1,106 @@
+@import "utils";
+
+$color: $text-inverse;
+$color-hover: opacify($text-inverse, 0.1);
+
+.container {
+  @extend %columnContainer;
+  background-color: $primary-color;
+  color: $color;
+  padding: 30px 0;
+}
+
+.sidebarIcon {
+  @extend .icon;
+  color: $color;
+  padding: 2px;
+  margin-right: 4px;
+
+  :global(.material-icons) {
+    font-size: 20px;
+  }
+}
+
+.row {
+  height: 50px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.clickableRow {
+  @extend .row;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(white, 0.1);
+    color: $color-hover;
+
+    .sidebarIcon {
+      color: $color-hover;
+    }
+  }
+}
+
+.editButton {
+  @extend %center;
+  padding: 6px 10px;
+  border-radius: $standard-border-radius;
+
+  // Reset button styles
+  @extend %noBorders;
+  cursor: pointer;
+  background-color: transparent;
+  color: $color;
+
+  &:hover {
+    background-color: rgba(white, 0.1);
+    color: $color-hover;
+
+    .sidebarIcon {
+      color: $color-hover;
+    }
+  }
+}
+
+.tagRow {
+  @extend %center;
+  padding: 5px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(white, 0.1);
+    color: $color-hover;
+
+    .noteCount {
+      background-color: $color-hover;
+    }
+  }
+}
+
+.tagRowZero {
+  @extend .tagRow;
+  opacity: 0.5;
+}
+
+.tagName {
+  @extend %ellipsis;
+  flex: 1;
+}
+
+.noteCount {
+  @extend %center;
+  font-weight: 600;
+  font-size: 0.9em;
+  color: $primary-color;
+  background-color: $color;
+  border-radius: 100px;
+  padding: 0 4px;
+  height: 1.1em;
+  min-width: 1.1em;
+}
+
+.empty {
+  @extend %center;
+  padding: 5px 20px;
+}

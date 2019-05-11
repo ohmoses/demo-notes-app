@@ -19,22 +19,14 @@ const scalarTypes = gql`
 const scalarResolvers = {
   DateTime,
   NonNegativeInt,
-  TagName: new RegularExpression("TagName", /^\S{1,40}$/),
+  TagName: new RegularExpression("TagName", /^.{1,40}$/),
 }
-
-const pageInfoType = gql`
-  type PageInfo {
-    hasNextPage: Boolean!
-    endCursor: String
-  }
-`
 
 export const typeDefs = mergeTypes([
   nodeTypes,
   noteTypes,
   tagTypes,
   scalarTypes,
-  pageInfoType,
 ])
 
 export const resolvers = mergeResolvers([

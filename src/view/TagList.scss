@@ -1,0 +1,106 @@
+@import "utils";
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  margin: 0 -0.5em -0.5em 0;
+  & > div {
+    margin: 0 0.5em 0.5em 0;
+  }
+}
+
+// Chips
+.chip {
+  @extend %center;
+  border-radius: 100px;
+  background-color: $primary-color-lighter;
+  color: white;
+  padding: 2px 3px 2px 8px; // Magic 🌈
+  white-space: nowrap;
+}
+
+.selectedChip {
+  @extend .chip;
+  opacity: 0.75;
+}
+
+.chipContent {
+  @extend %ellipsis;
+  margin: 0 5px 2px 0; // Yet more magic 🌈
+}
+
+.removeButton {
+  @extend %center;
+  cursor: pointer;
+  padding: 2px;
+  margin-left: -1px; // So much magic 🌈
+  border-radius: 100px;
+  &:hover,
+  selected & {
+    background-color: rgba(white, 0.2);
+  }
+  :global(.material-icons) {
+    font-size: 1em;
+    color: rgba(white, 0.7);
+    &:hover,
+    selected & {
+      color: white;
+    }
+  }
+}
+
+// Input
+.inputContainer {
+  flex: 1;
+  position: relative;
+  height: 1.45em;
+}
+
+.input {
+  @extend %noBorders;
+  color: $text-primary;
+  height: 100%;
+  width: 100%;
+  min-width: 5em;
+  white-space: pre;
+}
+
+.shadowInput {
+  @extend .input;
+  margin-left: 1em;
+  height: 0;
+  overflow: hidden;
+}
+
+// Suggestion box
+$padding-side: 6px;
+
+.suggestionBox {
+  @extend %dropdown;
+  top: calc(1.45em + 2px);
+  left: -$padding-side; // Align with input text
+}
+
+.row {
+  padding: 4px $padding-side;
+  color: rgba($text-primary, 0.7);
+  cursor: pointer;
+}
+
+.lastRow {
+  @extend .row;
+  border-top: $standard-border;
+}
+
+.rowSelected {
+  @extend .row;
+  background-color: rgba($primary-color-lighter, 0.1);
+  color: $text-primary;
+}
+
+.lastRowSelected {
+  @extend .rowSelected;
+  @extend .lastRow;
+}

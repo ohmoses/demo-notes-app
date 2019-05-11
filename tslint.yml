@@ -5,6 +5,9 @@ extends:
 rules:
   no-submodule-imports: false
   object-literal-sort-keys: false
+  interface-name: false
+  member-access: false
+  jsx-no-lambda: false
 linterOptions:
   exclude:
     - "node_modules/**/*"

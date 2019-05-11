@@ -8,31 +8,44 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
+  DateTime: string | Date
   NonNegativeInt: number
-  DateTime: Date
   TagName: string
 }
 
+export type ChangeTagsPayload = {
+  note: Note
+  tag: Tag
+  optimistic: Scalars["Boolean"]
+}
+
 export type CreateNoteInput = {
+  id?: Maybe<Scalars["ID"]>
   title?: Maybe<Scalars["String"]>
   content?: Maybe<Scalars["String"]>
   tagIds?: Maybe<Array<Scalars["ID"]>>
-  color?: Maybe<NoteColor>
 }
 
 export type CreateTagInput = {
+  id?: Maybe<Scalars["ID"]>
   name: Scalars["String"]
 }
 
+export type DeleteNotePayload = {
+  id: Scalars["ID"]
+  tags: Array<Tag>
+  optimistic: Scalars["Boolean"]
+}
+
 export type Mutation = {
-  createNote: Note
-  updateNote: Note
-  addTag: Note
-  removeTag: Note
-  deleteNote: Scalars["Boolean"]
-  createTag: Tag
-  updateTag: Tag
-  deleteTag: Scalars["Boolean"]
+  createNote: NotePayload
+  updateNote: NotePayload
+  addTag: ChangeTagsPayload
+  removeTag: ChangeTagsPayload
+  deleteNote: DeleteNotePayload
+  createTag: TagPayload
+  updateTag: TagPayload
+  deleteTag: TagPayload
 }
 
 export type MutationCreateNoteArgs = {
@@ -82,104 +95,165 @@ export type Note = Node & {
   createdAt: Scalars["DateTime"]
   modifiedAt: Scalars["DateTime"]
   tags: Array<Tag>
-  color: NoteColor
 }
 
-export enum NoteColor {
-  White = "WHITE",
-  Yellow = "YELLOW",
-  Green = "GREEN",
-  Red = "RED",
-  Blue = "BLUE",
-}
-
-export type NoteEdge = {
-  cursor: Scalars["String"]
+export type NotePayload = {
   note: Note
-}
-
-export type NotesConnection = {
-  totalCount: Scalars["Int"]
-  pageInfo: PageInfo
-  edges: Array<NoteEdge>
-}
-
-export type PageInfo = {
-  hasNextPage: Scalars["Boolean"]
-  endCursor?: Maybe<Scalars["String"]>
+  optimistic: Scalars["Boolean"]
 }
 
 export type Query = {
-  node: Node
-  nodes: Array<Node>
-  notes: NotesConnection
-  allNotes: Array<Note>
+  notes: Array<Note>
   tags: Array<Tag>
-}
-
-export type QueryNodeArgs = {
-  id: Scalars["ID"]
-}
-
-export type QueryNodesArgs = {
-  ids: Array<Scalars["ID"]>
-}
-
-export type QueryNotesArgs = {
-  first?: Maybe<Scalars["NonNegativeInt"]>
-  after?: Maybe<Scalars["String"]>
-  sortBy: SortBy
-  sortOrder: SortOrder
-}
-
-export type QueryAllNotesArgs = {
-  sortBy: SortBy
-  sortOrder: SortOrder
-}
-
-export enum SortBy {
-  Title = "title",
-  CreatedAt = "createdAt",
-  ModifiedAt = "modifiedAt",
-}
-
-export enum SortOrder {
-  Asc = "ASC",
-  Desc = "DESC",
 }
 
 export type Tag = Node & {
   id: Scalars["ID"]
   name: Scalars["String"]
-  notes: NotesConnection
-  allNotes: Array<Note>
+  noteCount: Scalars["NonNegativeInt"]
 }
 
-export type TagNotesArgs = {
-  first?: Maybe<Scalars["NonNegativeInt"]>
-  after?: Maybe<Scalars["String"]>
-  sortBy: SortBy
-  sortOrder: SortOrder
-}
-
-export type TagAllNotesArgs = {
-  sortBy: SortBy
-  sortOrder: SortOrder
+export type TagPayload = {
+  tag: Tag
+  notes?: Maybe<Array<Note>>
+  optimistic: Scalars["Boolean"]
 }
 
 export type UpdateNoteInput = {
   title?: Maybe<Scalars["String"]>
   content?: Maybe<Scalars["String"]>
-  color?: Maybe<NoteColor>
 }
 
 export type UpdateTagInput = {
   name?: Maybe<Scalars["String"]>
 }
+export type NoteFieldsFragment = { __typename?: "Note" } & Pick<
+  Note,
+  "id" | "title" | "content" | "createdAt" | "modifiedAt"
+> & {
+    tags: Array<{ __typename?: "Tag" } & Pick<Tag, "id" | "name" | "noteCount">>
+  }
+
+export type TagFieldsFragment = { __typename?: "Tag" } & Pick<
+  Tag,
+  "id" | "name" | "noteCount"
+>
+
+export type CreateNoteMutationVariables = {
+  id?: Maybe<Scalars["ID"]>
+  tagIds?: Maybe<Array<Scalars["ID"]>>
+}
+
+export type CreateNoteMutation = { __typename?: "Mutation" } & {
+  createNote: { __typename?: "NotePayload" } & Pick<
+    NotePayload,
+    "optimistic"
+  > & { note: { __typename?: "Note" } & NoteFieldsFragment }
+}
+
+export type UpdateNoteMutationVariables = {
+  id: Scalars["ID"]
+  title?: Maybe<Scalars["String"]>
+  content?: Maybe<Scalars["String"]>
+}
+
+export type UpdateNoteMutation = { __typename?: "Mutation" } & {
+  updateNote: { __typename?: "NotePayload" } & Pick<
+    NotePayload,
+    "optimistic"
+  > & { note: { __typename?: "Note" } & NoteFieldsFragment }
+}
+
+export type AddTagMutationVariables = {
+  noteId: Scalars["ID"]
+  tagId: Scalars["ID"]
+}
+
+export type AddTagMutation = { __typename?: "Mutation" } & {
+  addTag: { __typename?: "ChangeTagsPayload" } & Pick<
+    ChangeTagsPayload,
+    "optimistic"
+  > & {
+      note: { __typename?: "Note" } & NoteFieldsFragment
+      tag: { __typename?: "Tag" } & TagFieldsFragment
+    }
+}
+
+export type RemoveTagMutationVariables = {
+  noteId: Scalars["ID"]
+  tagId: Scalars["ID"]
+}
+
+export type RemoveTagMutation = { __typename?: "Mutation" } & {
+  removeTag: { __typename?: "ChangeTagsPayload" } & Pick<
+    ChangeTagsPayload,
+    "optimistic"
+  > & {
+      note: { __typename?: "Note" } & NoteFieldsFragment
+      tag: { __typename?: "Tag" } & TagFieldsFragment
+    }
+}
+
+export type DeleteNoteMutationVariables = {
+  id: Scalars["ID"]
+}
+
+export type DeleteNoteMutation = { __typename?: "Mutation" } & {
+  deleteNote: { __typename?: "DeleteNotePayload" } & Pick<
+    DeleteNotePayload,
+    "id" | "optimistic"
+  > & { tags: Array<{ __typename?: "Tag" } & TagFieldsFragment> }
+}
+
+export type CreateTagMutationVariables = {
+  id?: Maybe<Scalars["ID"]>
+  name: Scalars["String"]
+}
+
+export type CreateTagMutation = { __typename?: "Mutation" } & {
+  createTag: { __typename?: "TagPayload" } & Pick<TagPayload, "optimistic"> & {
+      tag: { __typename?: "Tag" } & TagFieldsFragment
+    }
+}
+
+export type UpdateTagMutationVariables = {
+  id: Scalars["ID"]
+  name: Scalars["String"]
+}
+
+export type UpdateTagMutation = { __typename?: "Mutation" } & {
+  updateTag: { __typename?: "TagPayload" } & Pick<TagPayload, "optimistic"> & {
+      tag: { __typename?: "Tag" } & TagFieldsFragment
+    }
+}
+
+export type DeleteTagMutationVariables = {
+  id: Scalars["ID"]
+}
+
+export type DeleteTagMutation = { __typename?: "Mutation" } & {
+  deleteTag: { __typename?: "TagPayload" } & Pick<TagPayload, "optimistic"> & {
+      tag: { __typename?: "Tag" } & TagFieldsFragment
+    }
+}
+
 export type NotesQueryVariables = {}
 
 export type NotesQuery = { __typename?: "Query" } & {
-  allNotes: Array<{ __typename?: "Note" } & Pick<Note, "content">>
+  notes: Array<{ __typename?: "Note" } & NoteFieldsFragment>
+}
+
+export type TagsQueryVariables = {}
+
+export type TagsQuery = { __typename?: "Query" } & {
+  tags: Array<{ __typename?: "Tag" } & TagFieldsFragment>
+}
+
+export type MainQueryVariables = {}
+
+export type MainQuery = { __typename?: "Query" } & {
+  notes: Array<{ __typename?: "Note" } & NoteFieldsFragment>
+  tags: Array<{ __typename?: "Tag" } & TagFieldsFragment>
 }
 import { NoteObject, TagObject } from "../server-mock/db"
 import { Context } from "../server-mock"
@@ -263,29 +337,47 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: {}
-  ID: DeepPartial<Scalars["ID"]>
-  Node: DeepPartial<Node>
-  NonNegativeInt: DeepPartial<Scalars["NonNegativeInt"]>
-  String: DeepPartial<Scalars["String"]>
-  SortBy: DeepPartial<SortBy>
-  SortOrder: DeepPartial<SortOrder>
-  NotesConnection: DeepPartial<NotesConnection>
-  Int: DeepPartial<Scalars["Int"]>
-  PageInfo: DeepPartial<PageInfo>
-  Boolean: DeepPartial<Scalars["Boolean"]>
-  NoteEdge: DeepPartial<
-    Omit<NoteEdge, "note"> & { note: ResolversTypes["Note"] }
-  >
   Note: NoteObject
+  Node: DeepPartial<Node>
+  ID: DeepPartial<Scalars["ID"]>
+  String: DeepPartial<Scalars["String"]>
   DateTime: DeepPartial<Scalars["DateTime"]>
   Tag: TagObject
-  NoteColor: DeepPartial<NoteColor>
+  NonNegativeInt: DeepPartial<Scalars["NonNegativeInt"]>
   Mutation: {}
   CreateNoteInput: DeepPartial<CreateNoteInput>
+  NotePayload: DeepPartial<
+    Omit<NotePayload, "note"> & { note: ResolversTypes["Note"] }
+  >
+  Boolean: DeepPartial<Scalars["Boolean"]>
   UpdateNoteInput: DeepPartial<UpdateNoteInput>
+  ChangeTagsPayload: DeepPartial<
+    Omit<ChangeTagsPayload, "note" | "tag"> & {
+      note: ResolversTypes["Note"]
+      tag: ResolversTypes["Tag"]
+    }
+  >
+  DeleteNotePayload: DeepPartial<
+    Omit<DeleteNotePayload, "tags"> & { tags: Array<ResolversTypes["Tag"]> }
+  >
   CreateTagInput: DeepPartial<CreateTagInput>
+  TagPayload: DeepPartial<
+    Omit<TagPayload, "tag" | "notes"> & {
+      tag: ResolversTypes["Tag"]
+      notes?: Maybe<Array<ResolversTypes["Note"]>>
+    }
+  >
   UpdateTagInput: DeepPartial<UpdateTagInput>
   TagName: DeepPartial<Scalars["TagName"]>
+}
+
+export type ChangeTagsPayloadResolvers<
+  ContextType = Context,
+  ParentType = ResolversTypes["ChangeTagsPayload"]
+> = {
+  note?: Resolver<ResolversTypes["Note"], ParentType, ContextType>
+  tag?: Resolver<ResolversTypes["Tag"], ParentType, ContextType>
+  optimistic?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
 }
 
 export interface DateTimeScalarConfig
@@ -293,54 +385,63 @@ export interface DateTimeScalarConfig
   name: "DateTime"
 }
 
+export type DeleteNotePayloadResolvers<
+  ContextType = Context,
+  ParentType = ResolversTypes["DeleteNotePayload"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>
+  tags?: Resolver<Array<ResolversTypes["Tag"]>, ParentType, ContextType>
+  optimistic?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
+}
+
 export type MutationResolvers<
   ContextType = Context,
   ParentType = ResolversTypes["Mutation"]
 > = {
   createNote?: Resolver<
-    ResolversTypes["Note"],
+    ResolversTypes["NotePayload"],
     ParentType,
     ContextType,
     MutationCreateNoteArgs
   >
   updateNote?: Resolver<
-    ResolversTypes["Note"],
+    ResolversTypes["NotePayload"],
     ParentType,
     ContextType,
     MutationUpdateNoteArgs
   >
   addTag?: Resolver<
-    ResolversTypes["Note"],
+    ResolversTypes["ChangeTagsPayload"],
     ParentType,
     ContextType,
     MutationAddTagArgs
   >
   removeTag?: Resolver<
-    ResolversTypes["Note"],
+    ResolversTypes["ChangeTagsPayload"],
     ParentType,
     ContextType,
     MutationRemoveTagArgs
   >
   deleteNote?: Resolver<
-    ResolversTypes["Boolean"],
+    ResolversTypes["DeleteNotePayload"],
     ParentType,
     ContextType,
     MutationDeleteNoteArgs
   >
   createTag?: Resolver<
-    ResolversTypes["Tag"],
+    ResolversTypes["TagPayload"],
     ParentType,
     ContextType,
     MutationCreateTagArgs
   >
   updateTag?: Resolver<
-    ResolversTypes["Tag"],
+    ResolversTypes["TagPayload"],
     ParentType,
     ContextType,
     MutationUpdateTagArgs
   >
   deleteTag?: Resolver<
-    ResolversTypes["Boolean"],
+    ResolversTypes["TagPayload"],
     ParentType,
     ContextType,
     MutationDeleteTagArgs
@@ -370,62 +471,21 @@ export type NoteResolvers<
   createdAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>
   modifiedAt?: Resolver<ResolversTypes["DateTime"], ParentType, ContextType>
   tags?: Resolver<Array<ResolversTypes["Tag"]>, ParentType, ContextType>
-  color?: Resolver<ResolversTypes["NoteColor"], ParentType, ContextType>
 }
 
-export type NoteEdgeResolvers<
+export type NotePayloadResolvers<
   ContextType = Context,
-  ParentType = ResolversTypes["NoteEdge"]
+  ParentType = ResolversTypes["NotePayload"]
 > = {
-  cursor?: Resolver<ResolversTypes["String"], ParentType, ContextType>
   note?: Resolver<ResolversTypes["Note"], ParentType, ContextType>
-}
-
-export type NotesConnectionResolvers<
-  ContextType = Context,
-  ParentType = ResolversTypes["NotesConnection"]
-> = {
-  totalCount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>
-  pageInfo?: Resolver<ResolversTypes["PageInfo"], ParentType, ContextType>
-  edges?: Resolver<Array<ResolversTypes["NoteEdge"]>, ParentType, ContextType>
-}
-
-export type PageInfoResolvers<
-  ContextType = Context,
-  ParentType = ResolversTypes["PageInfo"]
-> = {
-  hasNextPage?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
-  endCursor?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>
+  optimistic?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
 }
 
 export type QueryResolvers<
   ContextType = Context,
   ParentType = ResolversTypes["Query"]
 > = {
-  node?: Resolver<
-    ResolversTypes["Node"],
-    ParentType,
-    ContextType,
-    QueryNodeArgs
-  >
-  nodes?: Resolver<
-    Array<ResolversTypes["Node"]>,
-    ParentType,
-    ContextType,
-    QueryNodesArgs
-  >
-  notes?: Resolver<
-    ResolversTypes["NotesConnection"],
-    ParentType,
-    ContextType,
-    QueryNotesArgs
-  >
-  allNotes?: Resolver<
-    Array<ResolversTypes["Note"]>,
-    ParentType,
-    ContextType,
-    QueryAllNotesArgs
-  >
+  notes?: Resolver<Array<ResolversTypes["Note"]>, ParentType, ContextType>
   tags?: Resolver<Array<ResolversTypes["Tag"]>, ParentType, ContextType>
 }
 
@@ -435,17 +495,10 @@ export type TagResolvers<
 > = {
   id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>
   name?: Resolver<ResolversTypes["String"], ParentType, ContextType>
-  notes?: Resolver<
-    ResolversTypes["NotesConnection"],
+  noteCount?: Resolver<
+    ResolversTypes["NonNegativeInt"],
     ParentType,
-    ContextType,
-    TagNotesArgs
-  >
-  allNotes?: Resolver<
-    Array<ResolversTypes["Note"]>,
-    ParentType,
-    ContextType,
-    TagAllNotesArgs
+    ContextType
   >
 }
 
@@ -454,18 +507,32 @@ export interface TagNameScalarConfig
   name: "TagName"
 }
 
+export type TagPayloadResolvers<
+  ContextType = Context,
+  ParentType = ResolversTypes["TagPayload"]
+> = {
+  tag?: Resolver<ResolversTypes["Tag"], ParentType, ContextType>
+  notes?: Resolver<
+    Maybe<Array<ResolversTypes["Note"]>>,
+    ParentType,
+    ContextType
+  >
+  optimistic?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>
+}
+
 export type Resolvers<ContextType = Context> = {
+  ChangeTagsPayload?: ChangeTagsPayloadResolvers<ContextType>
   DateTime?: GraphQLScalarType
+  DeleteNotePayload?: DeleteNotePayloadResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Node?: NodeResolvers
   NonNegativeInt?: GraphQLScalarType
   Note?: NoteResolvers<ContextType>
-  NoteEdge?: NoteEdgeResolvers<ContextType>
-  NotesConnection?: NotesConnectionResolvers<ContextType>
-  PageInfo?: PageInfoResolvers<ContextType>
+  NotePayload?: NotePayloadResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
   Tag?: TagResolvers<ContextType>
   TagName?: GraphQLScalarType
+  TagPayload?: TagPayloadResolvers<ContextType>
 }
 
 /**

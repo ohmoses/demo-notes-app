@@ -1,7 +1,7 @@
 schema: ./src/server-mock/gql/*
 config:
   scalars:
-    DateTime: Date
+    DateTime: string | Date
     NonNegativeInt: number
     TagName: string
   defaultMapper: ts-essentials#DeepPartial<{T}>
@@ -11,7 +11,7 @@ config:
   contextType: ../server-mock#Context
 generates:
   ./src/gen/types.ts:
-    documents: ./src/view/**/*
+    documents: ./src/view/gql/*
     plugins:
       - add: /* tslint:disable */
       - typescript

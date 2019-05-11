@@ -1,10 +1,8 @@
 /* tslint:disable-next-line:no-implicit-dependencies */
 import { DeepPartial } from "ts-essentials"
+import uuid from "uuid/v4"
 
-import { NoteColor } from "../gen/types"
-
-type ID = string
-type Maybe<T> = T | null
+import { ID } from "../utils"
 
 export enum DBType {
   Note = "Note",
@@ -18,12 +16,11 @@ export interface INode {
 
 export interface INoteDb extends INode {
   type: DBType.Note
-  title: Maybe<string>
+  title: string
   content: string
   createdAt: Date
   modifiedAt: Date
   tagIds: ID[]
-  color: NoteColor
 }
 
 export interface ITagDb extends INode {
@@ -77,8 +74,7 @@ function upsert(id: ID, arg2: any, arg3?: any) {
 
 function remove(id: ID) {
   if (!ids[id]) {
-    delete ids[id]
-    return false
+    throw new Error(`Item not found. Id: ${id}`)
   }
   delete ids[id]
   return true

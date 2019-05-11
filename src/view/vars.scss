@@ -1,0 +1,26 @@
+// Breakpoints
+$br-small: 425px;
+$br-medium: 768px;
+$br-large: 1024px;
+$br-xlarge: 1280px;
+
+// Colors
+$text-primary: rgba(black, 0.8);
+$text-title: rgba(black, 0.75);
+$text-light: rgba(black, 0.5);
+$text-inverse: rgba(white, 0.8);
+$text-light-inverse: rgba(white, 0.5);
+$text-error: rgba(crimson, 0.9);
+
+$primary-color: rgb(0, 52, 77);
+$primary-color-lighter: lighten($primary-color, 20%);
+
+// Misc
+$standard-border: solid 1px #ddd;
+$standard-border-radius: 4px;
+
+// Z-indices:
+$z-norm: 1;
+$z-dropdown: 2;
+$z-overlay: 3;
+// $z-modal: 4;

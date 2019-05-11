@@ -1,0 +1,82 @@
+@import "utils";
+
+.overlay {
+  @extend %spread;
+  background: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  z-index: $z-overlay;
+}
+
+.loadingDots {
+  @extend %center;
+  @extend .overlay;
+  font-size: calc(0.2 * 100vw);
+  font-weight: 700;
+  color: white;
+}
+
+.errorMessageScreen {
+  @extend %spread;
+  font-size: 1.2em;
+  color: $text-error;
+  padding: 1em;
+}
+
+// Nesting the css for legibility
+.container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+
+  .center {
+    position: fixed;
+    @extend %center;
+    @extend %spread;
+    z-index: $z-overlay;
+    pointer-events: none;
+  }
+
+  .tagModalContainer {
+    background-color: white;
+    pointer-events: all;
+
+    @media (max-width: $br-small - 1) {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .drawerContainer {
+    position: fixed;
+    display: flex;
+    height: 100%;
+    width: 280px;
+    z-index: $z-overlay;
+  }
+
+  .sideBarContainer {
+    display: flex;
+    flex: 1;
+    min-width: 220px;
+    max-width: 280px;
+  }
+
+  .mainContainer {
+    display: flex;
+    flex: 5;
+
+    .noteListContainer {
+      display: flex;
+      flex: 1;
+      min-width: 300px;
+
+      @media (min-width: $br-medium) {
+        max-width: 480px;
+      }
+    }
+    .noteEditorContainer {
+      display: flex;
+      flex: 2;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+@import "utils";
+
+.container {
+  @extend %columnContainer;
+  box-shadow: 2px 0 2px 0 #eee;
+}
+
+.header {
+  @extend %header;
+  margin: 0;
+}
+
+.listTitle {
+  @extend %ellipsis;
+  color: $text-light;
+  font-size: 1.25em;
+  margin: 0 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.tagName {
+  @extend %ellipsis;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.9em; // Adjust optical difference in size between fonts
+  height: 1.25em;
+}
+
+.dropdownContainer {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.overlay {
+  @extend %spread;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: $z-dropdown;
+}
+
+.dropdown {
+  @extend %dropdown;
+  top: 60px;
+}
+
+.dropdownRow {
+  padding: 6px 10px;
+  color: rgba($text-primary, 0.7);
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: rgba($primary-color-lighter, 0.1);
+    color: $text-primary;
+  }
+}
+
+.noteCount {
+  color: $text-light;
+  margin: 0 1em;
+}
+
+.listContainer {
+  margin-top: 0.5em;
+}
+
+.button {
+  align-self: center;
+  margin: 2em;
+  padding: 0.5em 1em;
+  border-radius: $standard-border-radius;
+  font-size: 1.1em;
+  font-weight: 600;
+
+  // Reset button styles
+  @extend %noBorders;
+  cursor: pointer;
+  background-color: rgba($primary-color-lighter, 0.8);
+  color: white;
+
+  &:hover {
+    background-color: $primary-color-lighter;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+  color: rgba($primary-color-lighter, 0.8);
+
+  &:hover {
+    color: $primary-color-lighter;
+  }
+}

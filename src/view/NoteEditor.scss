@@ -1,0 +1,76 @@
+@import "utils";
+@import "vars";
+
+$side-margin: 1em;
+$between: 0.8em;
+
+%section {
+  margin-left: $side-margin;
+  margin-right: $side-margin;
+  margin-bottom: $between;
+}
+
+.emptyMessage {
+  @extend %spread;
+  @extend %columnContainer;
+  @extend %center;
+  color: $text-light;
+  font-size: 1.2em;
+}
+
+.container {
+  @extend %columnContainer;
+}
+
+.header {
+  @extend %header;
+  border-bottom: $standard-border;
+}
+
+.titleContainer {
+  @extend %section;
+
+  .titleInput {
+    @extend %spread;
+    @extend %noBorders;
+    font-weight: 600;
+    font-size: 1.8em;
+    color: $text-title;
+    resize: none;
+
+    @media (min-width: $br-small) {
+      font-size: 2em;
+    }
+  }
+}
+
+.datesContainer {
+  @extend %section;
+
+  .dateDesc {
+    color: $text-light;
+  }
+}
+
+.tagListContainer {
+  @extend %section;
+}
+
+.contentContainer {
+  @extend %section;
+  display: flex;
+  flex: 1;
+
+  .contentInput {
+    @extend %noBorders;
+    flex: 1;
+    font-family: "Roboto Mono", monospace;
+    font-size: 0.9em; // Adjust optical difference in size between fonts
+    line-height: 1.35em;
+    color: $text-primary;
+    resize: none;
+    max-width: 50em;
+    margin-bottom: 1em;
+    padding: 0;
+  }
+}

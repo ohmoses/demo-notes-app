@@ -1,0 +1,58 @@
+@import "utils";
+@import "vars";
+
+.container {
+  cursor: pointer;
+  padding: 0.5em;
+  &:hover {
+    background-color: rgba($primary-color-lighter, 0.1);
+  }
+}
+
+.header {
+  @extend %center;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.title {
+  @extend %ellipsis;
+  flex: 1;
+}
+
+.placeholder {
+  @extend .title;
+  color: $text-light;
+}
+
+.date {
+  margin-left: 0.5em;
+}
+
+.preview {
+  min-height: 1.25em;
+  max-height: 2.5em;
+  overflow: hidden;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0.5em -0.4em -0.4em 0;
+  font-size: 0.9em;
+}
+
+.tag {
+  margin: 0 0.4em 0.4em 0;
+  height: 1.25em;
+  border-radius: $standard-border-radius;
+  border: solid 1px rgba($primary-color-lighter, 0.7);
+  padding: 0 4px 2px 4px;
+  color: $primary-color-lighter;
+  line-height: 1em;
+  white-space: nowrap;
+  opacity: 0.75;
+}

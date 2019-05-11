@@ -1,0 +1,75 @@
+@import "utils";
+
+.container {
+  @extend %columnContainer;
+  padding: 1em;
+
+  @media (min-width: $br-small) {
+    min-width: calc(#{$br-small} - 2em);
+    max-width: calc(100vw - 2em);
+  }
+}
+
+.row {
+  @extend %center;
+  margin-bottom: 10px;
+}
+
+$iconSize: 22px;
+$iconPadding: 5px;
+$tagNameMargin: 10px;
+
+.inputContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(
+    100% - #{2 * ($iconSize + 2 * $iconPadding + $tagNameMargin)}
+  ); // I give up, sorry
+}
+
+.input {
+  @extend %noBorders;
+  border-bottom: $standard-border;
+  margin: 0 $tagNameMargin;
+  flex: 1;
+}
+
+.shadowInput {
+  overflow: hidden;
+  height: 0;
+}
+
+.tagName,
+.shadowInput {
+  @extend %ellipsis;
+  margin: 0 (10px + $tagNameMargin) 0 $tagNameMargin;
+}
+
+.iconSmall {
+  @extend .iconClickable;
+  padding: $iconPadding;
+
+  :global(.material-icons) {
+    font-size: $iconSize;
+  }
+}
+
+.doneButton {
+  align-self: flex-end;
+  padding: 0.5em 1em;
+  border-radius: $standard-border-radius;
+  font-size: 1.1em;
+  font-weight: 600;
+
+  // Reset button styles
+  @extend %noBorders;
+  cursor: pointer;
+  background-color: transparent;
+  color: rgba($primary-color-lighter, 0.8);
+
+  &:hover {
+    color: $primary-color-lighter;
+    background-color: rgba($primary-color-lighter, 0.1);
+  }
+}

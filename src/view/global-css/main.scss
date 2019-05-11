@@ -1,0 +1,28 @@
+@import "../vars";
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 16px;
+  line-height: 1.25em;
+  color: $text-primary;
+
+  @media (min-width: $br-small) {
+    font-size: 18px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+strong {
+  font-weight: 600;
+}
+
+input::placeholder {
+  opacity: 0.7;
+}
+
+textarea::placeholder {
+  opacity: 0.65;
+}

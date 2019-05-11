@@ -1,0 +1,85 @@
+@import "vars";
+
+%spread {
+  width: 100%;
+  height: 100%;
+}
+
+%center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+%noBorders {
+  border: 0;
+  outline: none;
+}
+
+%ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+%columnContainer {
+  @extend %spread;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+%header {
+  @extend %center;
+  margin-bottom: 1em;
+  padding: 0.5em;
+}
+
+%iconContainer {
+  @extend %center;
+  padding: 0.5em;
+  border-radius: $standard-border-radius;
+  cursor: pointer;
+  color: $text-light;
+
+  &:hover {
+    color: opacify($text-light, 0.2);
+    background-color: rgba($text-light, 0.1);
+  }
+
+  :global(.material-icons) {
+    font-size: 30px;
+  }
+}
+
+%dropdown {
+  position: absolute;
+  z-index: $z-dropdown;
+  box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  padding: 4px 0;
+}
+
+.icon {
+  @extend %center;
+  padding: 0.5em;
+  border-radius: $standard-border-radius;
+  color: $text-light;
+
+  :global(.material-icons) {
+    font-size: 30px;
+  }
+}
+
+.iconClickable {
+  @extend .icon;
+  cursor: pointer;
+
+  &:hover {
+    color: opacify($text-light, 0.2);
+    background-color: rgba($text-light, 0.1);
+  }
+}
+
+.filler {
+  flex: 1;
+}
