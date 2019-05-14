@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react"
 import { useApolloClient, useMutation } from "react-apollo-hooks"
 import { useDispatch } from "redux-react-hook"
 import uuid from "uuid/v4"
@@ -14,11 +13,7 @@ import { TAG_FIELDS_FRAGMENT } from "./gql/fragments"
 import { CREATE_NOTE_MUTATION } from "./gql/mutations"
 import { MAIN_QUERY } from "./gql/queries"
 
-export type WithCreateNote<P> = P & { createNote: () => void }
-
-export const withCreateNote = <P>(
-  component: FunctionComponent<WithCreateNote<P>>,
-) => (props: P) => {
+export const useCreateNote = () => {
   const dispatch = useDispatch()
   const client = useApolloClient()
   const filter = getFromStore("filter")
@@ -76,5 +71,5 @@ export const withCreateNote = <P>(
       }),
     })
   }
-  return component({ ...props, createNote })
+  return createNote
 }

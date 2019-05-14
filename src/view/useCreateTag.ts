@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react"
 import { useMutation } from "react-apollo-hooks"
 import { useDispatch } from "redux-react-hook"
 import uuid from "uuid/v4"
@@ -6,18 +5,13 @@ import uuid from "uuid/v4"
 import {
   CreateTagMutation,
   CreateTagMutationVariables,
-  Tag,
   TagsQuery,
 } from "../gen/types"
 import { setIsMutating } from "../model"
 import { CREATE_TAG_MUTATION } from "./gql/mutations"
 import { TAGS_QUERY } from "./gql/queries"
 
-export type WithCreateTag<P> = P & { createTag: (name: string) => Tag }
-
-export const withCreateTag = <P>(
-  component: FunctionComponent<WithCreateTag<P>>,
-) => (props: P) => {
+export const useCreateTag = () => {
   const dispatch = useDispatch()
   const createTagMutation = useMutation<
     CreateTagMutation,
@@ -61,5 +55,5 @@ export const withCreateTag = <P>(
     })
     return tag
   }
-  return component({ ...props, createTag })
+  return createTag
 }
